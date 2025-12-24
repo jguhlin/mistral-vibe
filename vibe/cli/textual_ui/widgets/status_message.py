@@ -17,6 +17,7 @@ class StatusMessage(SpinnerMixin, Static):
         self._initial_text = initial_text
         self._indicator_widget: Static | None = None
         self._text_widget: Static | None = None
+        self.success = True
         self.init_spinner()
         super().__init__(**kwargs)
 
@@ -36,6 +37,9 @@ class StatusMessage(SpinnerMixin, Static):
     def on_mount(self) -> None:
         self.update_display()
         self.start_spinner_timer()
+
+    def on_resize(self) -> None:
+        self.refresh_spinner()
 
     def _update_spinner_frame(self) -> None:
         if not self._is_spinning:
